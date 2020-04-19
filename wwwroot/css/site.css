@@ -51,6 +51,35 @@ button.accept-policy {
   line-height: inherit;
 }
 
+/* Custom css */
+.summoner-container {
+    background: #00366d;
+    border: 1px solid gold;
+    padding: 10px;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 .profile {
+    font-size: 5em;
+}
+
+.summoner-name {
+    color: gold;
+    font-size: 1.5em;
+    font-weight: bold;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.summoner-icon #icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 25%;
+    margin: 0 auto;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

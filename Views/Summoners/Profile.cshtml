@@ -1,13 +1,26 @@
-﻿@model Summoner;
+﻿@model ViewModelProfile;
 @{
     ViewData["Title"] = "Profile";
 }
-<h1>Profile</h1>
+<h1 class="profile">Profile</h1>
 
 <!-- Currently just displaying some basic info for testing purposes. -->
-<div>
-    Summoner Name: @Model.Name
+<div class="summoner-container">
+    <div class="summoner-name">
+        <div>
+            @Model.Summoner.Name
+        </div>
+        <div>
+            Level: @Model.Summoner.SummonerLevel
+        </div>
+    </div>
+    <div class="summoner-icon mt-0">
+        <img id="icon" src="~/img/profileicon/@(Model.Summoner.ProfileIconId).png" />
+    </div>
+
 </div>
-<div>
-    Summoner ID: @Model.Id
-</div>
+
+@for (int i = 0; i < 3; i++)
+{
+    <span>@Model.Masteries[i].ChampionID</span>
+}

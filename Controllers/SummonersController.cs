@@ -31,12 +31,20 @@ namespace MyLeagueDashboard.Controllers
             // TODO: Add option to select region
             // Currently just using NA region, since that's what I am on.
             Summoner_V4 summonerv4 = new Summoner_V4("na1");
+            Champion_Mastery_V4 championMastery = new Champion_Mastery_V4("na1");
+            
+
             // SummonerV4 handles summoner requests
             Summoner summoner = summonerv4.GetSummonerByName(id);
-            
+            List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
+
+            // At this point, I have a list of champions. But I dont know how to deserialize the MASSIVE json file for champions
+            // to find which champions correlate to which ID.
+
+            ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner, Masteries = masteries };
             // Just passing summoner to view. Eventually will make requests for more information,
             // and package into a viewmodel to pass.
-            return View(summoner);
+            return View(viewModel);
         }
     }
 }
