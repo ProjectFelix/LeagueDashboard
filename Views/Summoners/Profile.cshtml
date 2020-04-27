@@ -5,22 +5,33 @@
 <h1 class="profile">Profile</h1>
 
 <!-- Currently just displaying some basic info for testing purposes. -->
-<div class="summoner-container">
-    <div class="summoner-name">
-        <div>
-            @Model.Summoner.Name
+<div class="profile-container d-sm-flex flex-column">
+    <div class="summoner-container neu-shadow align-self-baseline">
+        <div class="summoner-name">
+            <div>
+                @Model.Summoner.Name
+            </div>
+            <div class="level">
+                Level: @Model.Summoner.SummonerLevel
+            </div>
         </div>
-        <div>
-            Level: @Model.Summoner.SummonerLevel
+        <div class="summoner-icon mt-0 align-self-center">
+            <img id="icon" src="~/img/profileicon/@(Model.Summoner.ProfileIconId).png" />
         </div>
-    </div>
-    <div class="summoner-icon mt-0">
-        <img id="icon" src="~/img/profileicon/@(Model.Summoner.ProfileIconId).png" />
-    </div>
 
+    </div>
+    <div class="masteries align-self-center mb-2"><h1>Top Champions by Mastery</h1></div>
+    <div class="mastery-card-container d-md-inline-flex">
+        @foreach (KeyValuePair<string, Champion> champ in Model.Info.Champions)
+        {
+            <div class="mastery-card @((champ.Value.Rank == 1) ? "order-0" : "order-1") d-flex flex-column neu-shadow @((champ.Value.Rank == 0) ? "rank-1" : "")">
+                <div class="mastery-card-name justify-content-between d-inline-flex align-items-end p-3">
+                    <h1>#@(champ.Value.Rank+1)</h1><h2>@champ.Key</h2>
+                </div>
+                <div class="mastery-card-image p-0 overflow-hidden">
+                    <img src="~/img/champion/splash/@(champ.Key)_0.jpg" />
+                </div>
+            </div>
+        }
+    </div>
 </div>
-
-@for (int i = 0; i < 3; i++)
-{
-    <span>@Model.Masteries[i].ChampionID</span>
-}

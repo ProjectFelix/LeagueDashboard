@@ -24,14 +24,24 @@ a {
   border-color: #1861ac;
 }
 
+.neu-shadow {
+    border-radius: 30px;
+    background: #555;
+    box-shadow: 6px 6px 10px #4a4a4a, -6px -6px 10px #606060,inset 6px 6px 6px #4f4f4f, inset -6px -6px 6px #5b5b5b;
+}
+
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    
 }
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    
   }
 }
 
@@ -53,10 +63,9 @@ button.accept-policy {
 
 /* Custom css */
 .summoner-container {
-    background: #00366d;
-    border: 1px solid gold;
-    padding: 10px;
-    width: 25%;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 50%;
     display: flex;
     flex-direction: column;
 }
@@ -70,7 +79,14 @@ h1 .profile {
     font-size: 1.5em;
     font-weight: bold;
     display: inline-flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.level {
+    font-size: 1em;
 }
 
 .summoner-icon #icon {
@@ -80,6 +96,30 @@ h1 .profile {
     margin: 0 auto;
 }
 
+.profile-container {
+    max-width: 100%;
+}
+
+.mastery-card {
+    max-width: 300px;
+    margin: 30px auto;
+
+}
+.mastery-card-image {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    max-width: 300px;
+    flex-shrink: 1;
+    
+}
+
+.rank-1 {
+    transform: scale(1.3);
+}
+
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -88,8 +128,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background: #555;
+    color: orangered;
 }
 .footer {
   position: absolute;

@@ -36,6 +36,11 @@ namespace MyLeagueDashboard.API
             return "https://" + Region + ".api.riotgames.com/lol/" + path + "?api_key=" + Key;
         }
 
+        protected string GetChampionURI()
+        {
+            return "http://ddragon.leagueoflegends.com/cdn/10.8.1/data/en_US/champion.json";
+        }
+
         public string GetKey(string path)
         {
             StreamReader sr = new StreamReader(path);

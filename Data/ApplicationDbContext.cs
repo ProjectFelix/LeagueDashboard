@@ -13,6 +13,6 @@ namespace MyLeagueDashboard.Data
             : base(options)
         {
         }
-        public DbSet<MyLeagueDashboard.Models.Summoner> Summoner { get; set; }
+        public DbSet<Summoner> Summoner { get; set; }
     }
 }

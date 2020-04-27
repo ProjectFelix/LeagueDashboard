@@ -9,8 +9,9 @@
     <p>Enter your summoner name to view profile. Currently only working for NA Region.</p>
 </div>
 
-
-    <div class="form-group d-inline-flex mx-auto mt-5">Summoner Name:
+<div class="flex-row d-flex neu-shadow align-content-center justify-content-center">
+    <div class="form-group d-inline-flex mx-auto mt-5 font-weight-bold">
+        Summoner Name:
         <div class="mx-3">
             @using (Html.BeginForm("Profile", "Summoners"))
             {
@@ -19,4 +20,4 @@
             }
         </div>
     </div>
-
+</div>

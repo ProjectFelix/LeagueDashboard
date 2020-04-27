@@ -17,12 +17,16 @@ namespace MyLeagueDashboard.Controllers
     public class SummonersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly MasteryResponse _allChamps;
+        private Champion_Mastery_V4 _championMastery;
 
         public SummonersController(ApplicationDbContext context)
         {
             // Context only used for Identity right now. Eventually, will save summoner data
             // to DB after requests complete, so we can check that first before calling API.
             _context = context;
+            _championMastery = new Champion_Mastery_V4("na1");
+            _allChamps = _championMastery.GetAllChampions();
         }
 
         [HttpPost]
@@ -37,11 +41,26 @@ namespace MyLeagueDashboard.Controllers
             // SummonerV4 handles summoner requests
             Summoner summoner = summonerv4.GetSummonerByName(id);
             List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
+            ChampionInfo list = new ChampionInfo();
+            for (int i = 0; i < 3; i++)
+            {
+                foreach (KeyValuePair<string, Champion> champ in _allChamps.Data)
+                {
+                    if (champ.Value.Key == masteries[i].ChampionID.ToString())
+                    {
+                        champ.Value.Rank = i;
+                        list.Champions.Add(champ.Key, champ.Value);
+                        break;
+                    }
+                }
+                
+                
+            }
 
             // At this point, I have a list of champions. But I dont know how to deserialize the MASSIVE json file for champions
             // to find which champions correlate to which ID.
 
-            ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner, Masteries = masteries };
+            ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner, Masteries = masteries, MasteryResponse = _allChamps, Info = list };
             // Just passing summoner to view. Eventually will make requests for more information,
             // and package into a viewmodel to pass.
             return View(viewModel);
