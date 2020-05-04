@@ -38,10 +38,12 @@ namespace MyLeagueDashboard.Controllers
             Champion_Mastery_V4 championMastery = new Champion_Mastery_V4("na1");
             
 
-            // SummonerV4 handles summoner requests
+            // Get summoner info
             Summoner summoner = summonerv4.GetSummonerByName(id);
+            // Get list of masteries by summoner id
             List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
             ChampionInfo list = new ChampionInfo();
+            // Get top 3 champs by mastery
             for (int i = 0; i < 3; i++)
             {
                 foreach (KeyValuePair<string, Champion> champ in _allChamps.Data)
@@ -57,12 +59,10 @@ namespace MyLeagueDashboard.Controllers
                 
             }
 
-            // At this point, I have a list of champions. But I dont know how to deserialize the MASSIVE json file for champions
-            // to find which champions correlate to which ID.
+            
 
             ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner, Masteries = masteries, MasteryResponse = _allChamps, Info = list };
-            // Just passing summoner to view. Eventually will make requests for more information,
-            // and package into a viewmodel to pass.
+            
             return View(viewModel);
         }
     }

@@ -14,5 +14,7 @@ namespace MyLeagueDashboard.Data
         {
         }
         public DbSet<Summoner> Summoner { get; set; }
+
+        // Will add DB stuff once I get all the APIs working correctly
     }
 }
