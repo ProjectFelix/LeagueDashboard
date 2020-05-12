@@ -11,6 +11,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using MyLeagueDashboard.API;
+using MyLeagueDashboard.Models.DTO;
+using MyLeagueDashboard.Models.Utils;
+using MyLeagueDashboard.Models.DB;
+using System.Text.RegularExpressions;
 
 namespace MyLeagueDashboard.Controllers
 {
@@ -36,6 +40,7 @@ namespace MyLeagueDashboard.Controllers
             // Currently just using NA region, since that's what I am on.
             Summoner_V4 summonerv4 = new Summoner_V4("na1");
             Champion_Mastery_V4 championMastery = new Champion_Mastery_V4("na1");
+            Match_V4 matchv4 = new Match_V4("na1");
             
 
             // Get summoner info
@@ -58,10 +63,32 @@ namespace MyLeagueDashboard.Controllers
                 
                 
             }
+            // Get matchlist by account id
+            MatchesResponse matchlist = matchv4.GetMatchesByAccountID(summoner.AccountId);
+            MatchDB matchDB = _context.Matches.Where(m => m.GameID == long.Parse(matchlist.Matches.First().GameID)).FirstOrDefault();
+            if (matchDB == null)
+            {
+                MatchDTO match = matchv4.GetMatchByMatchID(matchlist.Matches.First().GameID);
+                matchDB = match.ConvertMatchDTOToDB(_context);
+            } else
+            {
+                bool Working;
+                matchDB = _context.Matches.Where(m => m.GameID == long.Parse(matchlist.Matches.First().GameID))
+                    .Include(m => m.ParticipantIdentities)
+                    .ThenInclude(m => m.Player)
+                    .FirstOrDefault();
+                Working = true;
+            }
 
             
 
-            ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner, Masteries = masteries, MasteryResponse = _allChamps, Info = list };
+            MatchDB m = new MatchDB(); // Just a stopping point
+            ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner,
+                                                                Masteries = masteries,
+                                                                MasteryResponse = _allChamps,
+                                                                Info = list,
+                                                                Matchlist = matchlist
+                                                              };
             
             return View(viewModel);
         }

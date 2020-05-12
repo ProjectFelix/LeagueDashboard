@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyLeagueDashboard.Models;
+using MyLeagueDashboard.Models.DB;
 
 namespace MyLeagueDashboard.Data
 {
@@ -13,7 +14,8 @@ namespace MyLeagueDashboard.Data
             : base(options)
         {
         }
-        public DbSet<Summoner> Summoner { get; set; }
+        public DbSet<Summoner> Summoners { get; set; }
+        public DbSet<MatchDB> Matches { get; set; }
 
         // Will add DB stuff once I get all the APIs working correctly
     }

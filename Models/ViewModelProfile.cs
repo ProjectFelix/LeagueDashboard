@@ -12,5 +12,7 @@ namespace MyLeagueDashboard.Models
         public MasteryResponse MasteryResponse { get; set; }
 
         public ChampionInfo Info { get; set; }
+
+        public MatchesResponse Matchlist { get; set; }
     }
 }

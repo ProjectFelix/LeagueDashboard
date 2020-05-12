@@ -33,7 +33,7 @@ namespace MyLeagueDashboard.API
 
         protected string GetURI(string path)
         {
-            return "https://" + Region + ".api.riotgames.com/lol/" + path + "?api_key=" + Key;
+            return "https://" + Region + ".api.riotgames.com/lol/" + path + "api_key=" + Key;
         }
 
         protected string GetChampionURI()

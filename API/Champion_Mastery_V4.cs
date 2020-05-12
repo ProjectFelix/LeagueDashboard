@@ -19,7 +19,7 @@ namespace MyLeagueDashboard.API
 
         public List<ChampionMastery> GetChampionMasteryById(string summonerID)
         {
-            string path = "champion-mastery/v4/champion-masteries/by-summoner/" + summonerID;
+            string path = $"champion-mastery/v4/champion-masteries/by-summoner/{summonerID}?";
 
             var response = GET(GetURI(path));
             string content = response.Content.ReadAsStringAsync().Result;
