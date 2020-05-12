@@ -34,17 +34,23 @@ namespace MyLeagueDashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Profile(string id)
+        public IActionResult Profile(string name)
         {
             // TODO: Add option to select region
             // Currently just using NA region, since that's what I am on.
-            Summoner_V4 summonerv4 = new Summoner_V4("na1");
+            
             Champion_Mastery_V4 championMastery = new Champion_Mastery_V4("na1");
             Match_V4 matchv4 = new Match_V4("na1");
-            
+
 
             // Get summoner info
-            Summoner summoner = summonerv4.GetSummonerByName(id);
+            Summoner summoner = _context.Summoners.Where(s => s.Name == name).SingleOrDefault();
+            if (summoner == null) {
+                Summoner_V4 summonerv4 = new Summoner_V4("na1");
+                summoner = summonerv4.GetSummonerByName(name);
+                _context.Summoners.Add(summoner);
+                _context.SaveChanges();
+            }
             // Get list of masteries by summoner id
             List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
             ChampionInfo list = new ChampionInfo();
@@ -75,7 +81,10 @@ namespace MyLeagueDashboard.Controllers
                 bool Working;
                 matchDB = _context.Matches.Where(m => m.GameID == long.Parse(matchlist.Matches.First().GameID))
                     .Include(m => m.ParticipantIdentities)
-                    .ThenInclude(m => m.Player)
+                        .ThenInclude(m => m.Player)
+                    .Include(m => m.Teams)
+                    .Include(m => m.Participants)
+                        .ThenInclude(m => m.Stats)
                     .FirstOrDefault();
                 Working = true;
             }
@@ -85,7 +94,7 @@ namespace MyLeagueDashboard.Controllers
             MatchDB m = new MatchDB(); // Just a stopping point
             ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner,
                                                                 Masteries = masteries,
-                                                                MasteryResponse = _allChamps,
+                                                                //MasteryResponse = _allChamps,
                                                                 Info = list,
                                                                 Matchlist = matchlist
                                                               };
