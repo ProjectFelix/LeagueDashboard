@@ -17,7 +17,7 @@ namespace MyLeagueDashboard.API
 
         public MatchesResponse GetMatchesByAccountID(string accountID)
         {
-            string path = $"match/v4/matchlists/by-account/{accountID}?endIndex=2&";
+            string path = $"match/v4/matchlists/by-account/{accountID}?endIndex=5&";
 
             var response = GET(GetURI(path));
             string content = response.Content.ReadAsStringAsync().Result;

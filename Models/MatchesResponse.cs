@@ -7,6 +7,9 @@ namespace MyLeagueDashboard.Models
 {
     public class MatchesResponse
     {
+        public int MatchesResponseID { get; set; }
         public List<Matches> Matches { get; set; }
+
+        public string SummonerID { get; set; }
     }
 }

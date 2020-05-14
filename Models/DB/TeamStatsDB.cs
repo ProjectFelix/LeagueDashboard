@@ -8,6 +8,8 @@ namespace MyLeagueDashboard.Models.DB
     public class TeamStatsDB
     {
         public int TeamStatsDBID { get; set; }
+
+        public long GameID { get; set; }
         public int TowerKills { get; set; }
         public int RiftHeraldKills { get; set; }
         public bool FirstBlood { get; set; }

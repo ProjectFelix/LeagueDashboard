@@ -77,9 +77,78 @@ namespace MyLeagueDashboard.Models.Utils
                                         HighestAchievedSeasonTier = p.HighestAchievedSeasonTier
                                     }).ToList()
             };
-            context.Matches.Add(match);
+            context.MatchesDB.Add(match);
             
             
+            context.SaveChanges();
+            return match;
+        }
+
+        public static MatchDB ConvertMatchDTOToDBv2(this MatchDTO dto, ApplicationDbContext context)
+        {
+            MatchDB match = new MatchDB
+            {
+                GameID = dto.GameID,
+                QueueID = dto.QueueID,
+                GameType = dto.GameType,
+                GameDuration = dto.GameDuration,
+                GameMode = dto.GameMode,
+                PlatformID = dto.PlatformID,
+                SeasonID = dto.SeasonID,
+                MapID = dto.MapID,
+                Teams = dto.Teams.Select(t => new TeamStatsDB
+                {
+                    GameID = dto.GameID,
+                    TowerKills = t.TowerKills,
+                    RiftHeraldKills = t.RiftHeraldKills,
+                    FirstBlood = t.FirstBlood,
+                    InhibitorKills = t.InhibitorKills,
+                    DragonKills = t.DragonKills,
+                    BaronKills = t.BaronKills,
+                    TeamID = t.TeamID,
+                    Win = t.Win
+                }).ToList(),
+            };
+            for (int i = 0; i < 10; i++)
+            {
+                PlayerInfoDB player = new PlayerInfoDB
+                {
+                    GameID = dto.GameID,
+                    ProfileIcon = dto.ParticipantIdentities[i].Player.ProfileIcon,
+                    MatchHistoryURI = dto.ParticipantIdentities[i].Player.MatchHistoryURI,
+                    SummonerName = dto.ParticipantIdentities[i].Player.SummonerName,
+                    SummonerID = dto.ParticipantIdentities[i].Player.SummonerID,
+                    PlatformID = dto.ParticipantIdentities[i].Player.PlatformID,
+                    ParticipantID = dto.Participants[i].ParticipantID,
+                    ChampionID = dto.Participants[i].ChampionID,
+                    TeamID = dto.Participants[i].TeamID,
+                    Spell1ID = dto.Participants[i].Spell1ID,
+                    Spell2ID = dto.Participants[i].Spell2ID,
+                    HighestAchievedSeasonTier = dto.Participants[i].HighestAchievedSeasonTier,
+                    GoldEarned = dto.Participants[i].Stats.GoldEarned,
+                    TotalPlayerScore = dto.Participants[i].Stats.TotalPlayerScore,
+                    ChampLevel = dto.Participants[i].Stats.ChampLevel,
+                    Deaths = dto.Participants[i].Stats.Deaths,
+                    TotalScoreRank = dto.Participants[i].Stats.TotalScoreRank,
+                    WardsPlaced = dto.Participants[i].Stats.WardsPlaced,
+                    TotalDamageDealt = dto.Participants[i].Stats.TotalDamageDealt,
+                    LargestKillingSpree = dto.Participants[i].Stats.LargestKillingSpree,
+                    TotalDamageDealtToChampions = dto.Participants[i].Stats.TotalDamageDealtToChampions,
+                    TotalMinionsKilled = dto.Participants[i].Stats.TotalMinionsKilled,
+                    ObjectivePlayerScore = dto.Participants[i].Stats.ObjectivePlayerScore,
+                    Kills = dto.Participants[i].Stats.Kills,
+                    CombatPlayerScore = dto.Participants[i].Stats.CombatPlayerScore,
+                    Assists = dto.Participants[i].Stats.Assists,
+                    Win = dto.Participants[i].Stats.Win,
+                    VisionScore = dto.Participants[i].Stats.VisionScore,
+                    FirstBloodKill = dto.Participants[i].Stats.FirstBloodKill
+                };
+                match.PlayerInfos.Add(player);
+                
+            }
+            context.MatchesDB.Add(match);
+
+
             context.SaveChanges();
             return match;
         }

@@ -252,7 +252,7 @@ namespace MyLeagueDashboard.Data.Migrations
 
                     b.HasKey("MatchDBID");
 
-                    b.ToTable("Matches");
+                    b.ToTable("MatchesDB");
                 });
 
             modelBuilder.Entity("MyLeagueDashboard.Models.DB.ParticipantDB", b =>
@@ -262,8 +262,17 @@ namespace MyLeagueDashboard.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AccountID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ChampionID")
                         .HasColumnType("int");
+
+                    b.Property<string>("CurrentAccountID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentPlatformID")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HighestAchievedSeasonTier")
                         .HasColumnType("nvarchar(max)");
@@ -271,7 +280,16 @@ namespace MyLeagueDashboard.Data.Migrations
                     b.Property<int?>("MatchDBID")
                         .HasColumnType("int");
 
+                    b.Property<string>("MatchHistoryURI")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ParticipantID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlatformID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProfileIcon")
                         .HasColumnType("int");
 
                     b.Property<int>("Spell1ID")
@@ -282,6 +300,12 @@ namespace MyLeagueDashboard.Data.Migrations
 
                     b.Property<int?>("StatsParticipantStatsDBID")
                         .HasColumnType("int");
+
+                    b.Property<string>("SummonerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SummonerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TeamID")
                         .HasColumnType("int");
@@ -301,6 +325,9 @@ namespace MyLeagueDashboard.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MatchDBID")
                         .HasColumnType("int");
@@ -419,6 +446,119 @@ namespace MyLeagueDashboard.Data.Migrations
                     b.ToTable("PlayerDB");
                 });
 
+            modelBuilder.Entity("MyLeagueDashboard.Models.DB.PlayerInfoDB", b =>
+                {
+                    b.Property<int>("PlayerInfoDBID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Assists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChampLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChampionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CombatPlayerScore")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CurrentAccountID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentPlatformID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Deaths")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("FirstBloodKill")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("GameID")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("GoldEarned")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HighestAchievedSeasonTier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Kills")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LargestKillingSpree")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MatchDBID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MatchHistoryURI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ObjectivePlayerScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ParticipantID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlatformID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProfileIcon")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Spell1ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Spell2ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SummonerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SummonerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeamID")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TotalDamageDealt")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TotalDamageDealtToChampions")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TotalMinionsKilled")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPlayerScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalScoreRank")
+                        .HasColumnType("int");
+
+                    b.Property<long>("VisionScore")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("WardsPlaced")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Win")
+                        .HasColumnType("bit");
+
+                    b.HasKey("PlayerInfoDBID");
+
+                    b.HasIndex("MatchDBID");
+
+                    b.ToTable("PlayerInfoDBs");
+                });
+
             modelBuilder.Entity("MyLeagueDashboard.Models.DB.TeamStatsDB", b =>
                 {
                     b.Property<int>("TeamStatsDBID")
@@ -434,6 +574,9 @@ namespace MyLeagueDashboard.Data.Migrations
 
                     b.Property<bool>("FirstBlood")
                         .HasColumnType("bit");
+
+                    b.Property<long>("GameID")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("InhibitorKills")
                         .HasColumnType("int");
@@ -457,7 +600,68 @@ namespace MyLeagueDashboard.Data.Migrations
 
                     b.HasIndex("MatchDBID");
 
-                    b.ToTable("TeamStatsDB");
+                    b.ToTable("TeamStatsDBs");
+                });
+
+            modelBuilder.Entity("MyLeagueDashboard.Models.Matches", b =>
+                {
+                    b.Property<int>("MatchesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Champion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GameID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lane")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("MatchDBID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MatchesResponseID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlatformID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Queue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Season")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Timestamp")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("MatchesID");
+
+                    b.HasIndex("MatchDBID");
+
+                    b.HasIndex("MatchesResponseID");
+
+                    b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("MyLeagueDashboard.Models.MatchesResponse", b =>
+                {
+                    b.Property<int>("MatchesResponseID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("SummonerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MatchesResponseID");
+
+                    b.ToTable("MatchesResponses");
                 });
 
             modelBuilder.Entity("MyLeagueDashboard.Models.Summoner", b =>
@@ -563,11 +767,31 @@ namespace MyLeagueDashboard.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyLeagueDashboard.Models.DB.PlayerInfoDB", b =>
+                {
+                    b.HasOne("MyLeagueDashboard.Models.DB.MatchDB", null)
+                        .WithMany("PlayerInfos")
+                        .HasForeignKey("MatchDBID");
+                });
+
             modelBuilder.Entity("MyLeagueDashboard.Models.DB.TeamStatsDB", b =>
                 {
                     b.HasOne("MyLeagueDashboard.Models.DB.MatchDB", null)
                         .WithMany("Teams")
                         .HasForeignKey("MatchDBID");
+                });
+
+            modelBuilder.Entity("MyLeagueDashboard.Models.Matches", b =>
+                {
+                    b.HasOne("MyLeagueDashboard.Models.DB.MatchDB", "MatchDB")
+                        .WithMany()
+                        .HasForeignKey("MatchDBID");
+
+                    b.HasOne("MyLeagueDashboard.Models.MatchesResponse", null)
+                        .WithMany("Matches")
+                        .HasForeignKey("MatchesResponseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

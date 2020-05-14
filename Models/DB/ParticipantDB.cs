@@ -15,5 +15,13 @@ namespace MyLeagueDashboard.Models.DB
         public int Spell1ID { get; set; }
         public int Spell2ID { get; set; }
         public string HighestAchievedSeasonTier { get; set; }
+        public int ProfileIcon { get; set; }
+        public string AccountID { get; set; }
+        public string MatchHistoryURI { get; set; }
+        public string CurrentAccountID { get; set; }
+        public string CurrentPlatformID { get; set; }
+        public string SummonerName { get; set; }
+        public string SummonerID { get; set; }
+        public string PlatformID { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace MyLeagueDashboard.Models.DB
     {
         public int ParticipantIdentityDBID { get; set; }
         public int PlayerDBID { get; set; }
+        public int Index { get; set; }
 
         public PlayerDB Player { get; set; }
     }

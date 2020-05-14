@@ -11,6 +11,16 @@
     <Compile Remove="Data\Migrations\20200512184844_Init.Designer.cs" />
     <Compile Remove="Data\Migrations\20200512190910_Init.cs" />
     <Compile Remove="Data\Migrations\20200512190910_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200512191527_Init.cs" />
+    <Compile Remove="Data\Migrations\20200512191527_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200513125019_Init.cs" />
+    <Compile Remove="Data\Migrations\20200513125019_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200513131513_Init.cs" />
+    <Compile Remove="Data\Migrations\20200513131513_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200513133817_Init.cs" />
+    <Compile Remove="Data\Migrations\20200513133817_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200514132748_Init.cs" />
+    <Compile Remove="Data\Migrations\20200514132748_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

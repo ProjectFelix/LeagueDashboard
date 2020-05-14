@@ -9,7 +9,10 @@ namespace MyLeagueDashboard.Models.DB
 {
     public class MatchDB
     {
-
+        public MatchDB()
+        {
+            PlayerInfos = new List<PlayerInfoDB>();
+        }
         public int MatchDBID { get; set; }
         public long GameID { get; set; }
         public ICollection<ParticipantIdentityDB> ParticipantIdentities { get; set; }
@@ -22,5 +25,7 @@ namespace MyLeagueDashboard.Models.DB
         public int MapID { get; set; }
         public string GameMode { get; set; }
         public ICollection<ParticipantDB> Participants { get; set; }
+
+        public List<PlayerInfoDB> PlayerInfos { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace MyLeagueDashboard.Models
     {
         public Summoner Summoner { get; set; }
         public List<ChampionMastery> Masteries { get; set; }
-        public MasteryResponse MasteryResponse { get; set; }
+        public Dictionary<int,string> ChampionIDs { get; set; }
 
         public ChampionInfo Info { get; set; }
 

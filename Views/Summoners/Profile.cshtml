@@ -1,4 +1,6 @@
-﻿@model ViewModelProfile;
+﻿
+@model ViewModelProfile;
+
 @{
     ViewData["Title"] = "Profile";
 }
@@ -21,12 +23,13 @@
 
     </div>
     <div class="masteries align-self-center mb-2"><h1>Top Champions by Mastery</h1></div>
-    <div class="mastery-card-container d-md-inline-flex align-content-end">
+    <div class="mastery-card-container d-md-inline-flex align-items-end">
         @foreach (KeyValuePair<string, Champion> champ in Model.Info.Champions)
         {
             <div class="mastery-card @((champ.Value.Rank == 1) ? "order-0" : "order-1") d-flex flex-column neu-shadow @((champ.Value.Rank == 0) ? "rank-1" : "")">
-                <div class="mastery-card-name justify-content-between d-inline-flex align-items-end p-3">
-                    <h1>#@(champ.Value.Rank+1)</h1><h2>@champ.Key</h2>
+                <div class="mastery-card-header d-inline-flex p-0">
+                    <div class="mastery-card-level"><h1>@(champ.Value.Rank+1)</h1></div>
+                    <div class="mastery-card-name"><h2 class="align-self-center">@champ.Key</h2></div>
                 </div>
                 <div class="mastery-card-image p-0 overflow-hidden">
                     <img src="~/img/champion/splash/@(champ.Key)_0.jpg" />
@@ -36,9 +39,82 @@
     </div>
 
     <div class="matches mt-4">
+        <h1>Match History</h1>
         @foreach (Matches match in Model.Matchlist.Matches)
         {
-            <div class="match">@match.GameID</div>
+
+            <div class="match d-flex neu-shadow">
+                <div class="match-summoner d-flex flex-column">
+                    @{string summonerChamp;
+                        int summonerKills, summonerAssists, summonerDeaths;
+                        foreach (PlayerInfoDB p in match.MatchDB.PlayerInfos)
+                        {
+                            if (p.SummonerName == Model.Summoner.Name)
+                            {
+                                summonerChamp = Model.ChampionIDs[p.ChampionID];
+                                summonerKills = p.Kills;
+                                summonerAssists = p.Assists;
+                                summonerDeaths = p.Deaths;
+                                        <div class="summoner-match-header d-inline-flex">
+                                            <div class="match-summoner-champ">
+                                                <img src="~/img/champion/tiles/@(summonerChamp)_0.jpg" />
+                                            </div>
+                                            <div class="header-right d-flex flex-column">
+                                                <div class="game-mode">
+                                                    <span>@match.MatchDB.GameMode</span>
+                                                </div>
+                                                <div class="kda">
+                                                    <span>@summonerKills / @summonerDeaths / @summonerAssists (@(((summonerKills + summonerAssists)/(float)Math.Max(summonerDeaths, 1)).ToString("F")) KDA)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="victory-@((p.Win == true) ? "w":"d")">
+                                            <span>@((p.Win == true) ? "Victory" : "Defeat")</span>
+                                        </div>
+                            }
+                        }
+                    }
+
+                </div>
+                @{ var team1 = match.MatchDB.Teams.ToList()[0]; }
+                <div class="team1 @((team1.Win == "Win") ? "win" : "lose")">
+                    <div class="outcome"><h1>@((team1.Win == "Win") ? "Win" : "Lose")</h1></div>
+                    <div class="participants d-flex flex-column">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            PlayerInfoDB player = match.MatchDB.PlayerInfos[i];
+                            string playerChamp = Model.ChampionIDs[player.ChampionID];
+                            <div class="participant d-flex flex-row-reverse">
+                                <div class="player-champ-img d-flex">
+                                    <img src="~/img/champion/tiles/@(playerChamp)_0.jpg" />
+                                </div>
+                                <div class="player-name text-right">
+                                    @player.SummonerName
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="team2 @((match.MatchDB.Teams.ToList()[1].Win == "Win") ? "win" : "lose")">
+                    <div class="outcome"><h1>@((match.MatchDB.Teams.ToList()[1].Win == "Win") ? "Win" : "Lose")</h1></div>
+                    <div class="participants d-flex flex-column">
+                        @for (int i = 5; i < 10; i++)
+                        {
+                            PlayerInfoDB player = match.MatchDB.PlayerInfos[i];
+                            string playerChamp = Model.ChampionIDs[player.ChampionID];
+                            <div class="participant d-flex">
+                                <div class="player-champ-img d-flex">
+                                    <img src="~/img/champion/tiles/@(playerChamp)_0.jpg" />
+                                </div>
+                                <div class="player-name">
+                                    @player.SummonerName
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         }
     </div>
 </div>

@@ -100,26 +100,143 @@ h1 .profile {
     max-width: 100%;
 }
 
-.mastery-card {
-    height: 70%;
-    max-width: 300px;
-    margin: 30px auto;
+.mastery-card-container {
+    height: 400px;
+    display: flex;
+}
 
+.mastery-card {
+    margin: 10px auto;
 }
 .mastery-card-image {
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     display: flex;
-    max-width: 300px;
-    flex-shrink: 1;
-    
+}
+.mastery-card-image img {
+    width: 100%;
+}
+.mastery-card-level {
+    background-color: orangered;
+    color: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 30px;
+    width: 20%;
+}
+
+.mastery-card-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
 }
 
 .rank-1 {
-    height: 100%;
+    width: 130%;
+    margin: 10px;
 }
 
 
+.match {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+.match-summoner {
+    width: 30%;
+}
+.team1,.team2 {
+    width: 35%;
+}
+.team2 {
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+.outcome {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.participants {
+
+}
+.lose {
+    background-color: #FDAFAF;
+    color: #FB1010;
+}
+.win {
+    background-color: #BDf9B3;
+    color: #00A611;
+}
+
+.match-summoner-champ {
+    width:30%;
+    border-top-left-radius: 30px;
+    display:flex;
+}
+.match-summoner-champ img {
+    border-top-left-radius: 30px;
+}
+
+.participant {
+    max-height: 10%;
+    width: 100%;
+}
+.player-champ-img {
+    width: 12%;
+    margin: 5px 10px;
+}
+.player-champ-img img {
+    width: 100%;
+    display:flex;
+    border-radius: 50%;
+}
+.player-name {
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.summoner-match-header {
+    width: 100%;
+    border-bottom: 2px solid #444;
+}
+
+.header-right {
+    width: 70%;
+}
+.game-mode {
+    font-weight: bold;
+    color: gold;
+    justify-items: center;
+    text-align: center;
+    font-size: 1.7em;
+    margin-top: 15px;
+}
+.kda {
+    justify-items: center;
+    text-align: center;
+    font-weight: bold;
+}
+.victory-w {
+    color: #00A611;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #00A611;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.victory-d {
+    color: #FB1010;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #FB1010;
+    font-weight: bold;
+    font-size: 1.1em;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */

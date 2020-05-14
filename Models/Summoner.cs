@@ -14,5 +14,7 @@ namespace MyLeagueDashboard.Models
         public int ProfileIconId { get; set; }
         public long RevisionDate { get; set; }
         public int SummonerLevel { get; set; }
+
+
     }
 }

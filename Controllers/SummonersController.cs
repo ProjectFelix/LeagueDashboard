@@ -50,9 +50,11 @@ namespace MyLeagueDashboard.Controllers
                 summoner = summonerv4.GetSummonerByName(name);
                 _context.Summoners.Add(summoner);
                 _context.SaveChanges();
+                summoner = _context.Summoners.Where(s => s.Name == name).SingleOrDefault();
             }
             // Get list of masteries by summoner id
             List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
+            // List will be top 3 champs by mastery
             ChampionInfo list = new ChampionInfo();
             // Get top 3 champs by mastery
             for (int i = 0; i < 3; i++)
@@ -70,33 +72,49 @@ namespace MyLeagueDashboard.Controllers
                 
             }
             // Get matchlist by account id
-            MatchesResponse matchlist = matchv4.GetMatchesByAccountID(summoner.AccountId);
-            MatchDB matchDB = _context.Matches.Where(m => m.GameID == long.Parse(matchlist.Matches.First().GameID)).FirstOrDefault();
-            if (matchDB == null)
+            MatchesResponse matches = _context.MatchesResponses.Where(r => r.SummonerID == summoner.Id).FirstOrDefault();
+            
+            if (matches == null)
             {
-                MatchDTO match = matchv4.GetMatchByMatchID(matchlist.Matches.First().GameID);
-                matchDB = match.ConvertMatchDTOToDB(_context);
+                matches = matchv4.GetMatchesByAccountID(summoner.AccountId);
+                matches.SummonerID = summoner.Id;
+                foreach (Matches match in matches.Matches)
+                {
+                    MatchDB matchDB = _context.MatchesDB.Where(m => m.GameID == long.Parse(match.GameID)).FirstOrDefault();
+                    if (matchDB == null) { 
+                        MatchDTO matchDTO = matchv4.GetMatchByMatchID(match.GameID);
+                        matchDB = matchDTO.ConvertMatchDTOToDBv2(_context);
+                    }
+                    match.MatchDB = matchDB;
+                }
+                _context.MatchesResponses.Add(matches);
+                _context.SaveChanges();
             } else
             {
-                bool Working;
-                matchDB = _context.Matches.Where(m => m.GameID == long.Parse(matchlist.Matches.First().GameID))
-                    .Include(m => m.ParticipantIdentities)
-                        .ThenInclude(m => m.Player)
-                    .Include(m => m.Teams)
-                    .Include(m => m.Participants)
-                        .ThenInclude(m => m.Stats)
-                    .FirstOrDefault();
-                Working = true;
+                matches.Matches = _context.Matches.Where(m => m.MatchesResponseID == matches.MatchesResponseID).OrderByDescending(m => m.Timestamp).ToList();
+                foreach (Matches match in matches.Matches)
+                {
+                    
+                    MatchDB matchDB = _context.MatchesDB.Where(m => m.GameID == long.Parse(match.GameID)).FirstOrDefault();
+                    matchDB.Teams = _context.TeamStatsDBs.Where(t => t.GameID == matchDB.GameID).OrderBy(t => t.TeamID).ToList();
+                    matchDB.PlayerInfos = _context.PlayerInfoDBs.Where(p => p.GameID == matchDB.GameID).OrderBy(p => p.ParticipantID).ToList();
+                    
+                    match.MatchDB = matchDB;
+                }
             }
 
-            
+            Dictionary<int, string> championIDs = new Dictionary<int, string>();
+            foreach (Champion c in _allChamps.Data.Values)
+            {
+                championIDs.Add(int.Parse(c.Key), c.Id);
+            }
 
             MatchDB m = new MatchDB(); // Just a stopping point
             ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner,
                                                                 Masteries = masteries,
-                                                                //MasteryResponse = _allChamps,
+                                                                ChampionIDs = championIDs,
                                                                 Info = list,
-                                                                Matchlist = matchlist
+                                                                Matchlist = matches
                                                               };
             
             return View(viewModel);
