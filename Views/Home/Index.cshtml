@@ -1,4 +1,5 @@
 ﻿@using MyLeagueDashboard.Models;
+@model FindModel; 
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,7 +16,11 @@
         <div class="mx-3">
             @using (Html.BeginForm("Profile", "Summoners"))
             {
-                @Html.TextBox("name")
+                @Html.DropDownListFor(m => m.Region, new List<SelectListItem>
+                    { new SelectListItem { Text="NA", Value="NA1"}
+                    }, "Region"
+               )
+                @Html.TextBoxFor(m => m.Name)
                 <input class="btn btn-primary" type="submit" id="findSummoner" value="Find Summoner" />
             }
         </div>

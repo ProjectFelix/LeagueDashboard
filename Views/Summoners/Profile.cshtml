@@ -8,17 +8,31 @@
 
 <!-- Currently just displaying some basic info for testing purposes. -->
 <div class="profile-container d-sm-flex flex-column">
-    <div class="summoner-container neu-shadow align-self-baseline">
-        <div class="summoner-name">
-            <div>
+    <div class="summoner-container neu-shadow d-flex flex-column">
+        <div class="summoner-top d-flex">
+            <div class="summoner-icon overflow-hidden">
+                <img id="icon" src="~/img/profileicon/@(Model.Summoner.ProfileIconId).png" />
+            </div>
+            <div class="summoner-name">
+            
                 @Model.Summoner.Name
             </div>
-            <div class="level">
+        </div>
+        <div class="level-info d-flex">
+            <div class="level-left">
+                <span>Level</span>
+            </div>
+            <div class="level-right">
                 Level: @Model.Summoner.SummonerLevel
             </div>
         </div>
-        <div class="summoner-icon mt-0 align-self-center">
-            <img id="icon" src="~/img/profileicon/@(Model.Summoner.ProfileIconId).png" />
+        <div class="summoner-kda d-flex">
+            <div class="summoner-kda-left">
+                KDA
+            </div>
+            <div class="summoner-kda-right">
+                @Model.Summoner.KDA.ToString("F")
+            </div>
         </div>
 
     </div>
@@ -55,6 +69,8 @@
                                 summonerKills = p.Kills;
                                 summonerAssists = p.Assists;
                                 summonerDeaths = p.Deaths;
+                                float summonerKDA = (summonerKills + summonerAssists) / (float)Math.Max(summonerDeaths, 1);
+                                float kdaDiff = summonerKDA - Model.Summoner.KDA;
                                         <div class="summoner-match-header d-inline-flex">
                                             <div class="match-summoner-champ">
                                                 <img src="~/img/champion/tiles/@(summonerChamp)_0.jpg" />
@@ -64,12 +80,47 @@
                                                     <span>@match.MatchDB.GameMode</span>
                                                 </div>
                                                 <div class="kda">
-                                                    <span>@summonerKills / @summonerDeaths / @summonerAssists (@(((summonerKills + summonerAssists)/(float)Math.Max(summonerDeaths, 1)).ToString("F")) KDA)</span>
+                                                    <span>@summonerKills / @summonerDeaths / @summonerAssists</span>
+                                                    (<span style="color:@((kdaDiff >= 0) ? "#BDf9B3" : "#FDAFAF")">@kdaDiff.ToString("F")</span> KDA)
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="victory-@((p.Win == true) ? "w":"d")">
-                                            <span>@((p.Win == true) ? "Victory" : "Defeat")</span>
+                                        <div class="match-sum-stats d-flex flex-column">
+                                            <div class="stat victory-@((p.Win == true) ? "w":"d")">
+                                                <span>@((p.Win == true) ? "Victory" : "Defeat")</span>
+                                            </div>
+                                            <div class="stat d-inline-flex p-0 m-0">
+                                                <div class="s-left">
+                                                    Gold
+                                                </div>
+                                                <div class="s-right">
+                                                    @p.GoldEarned
+                                                </div>
+                                            </div>
+                                            <div class="stat d-inline-flex p-0 m-0">
+                                                <div class="s-left">
+                                                    Damage
+                                                </div>
+                                                <div class="s-right">
+                                                    @p.TotalDamageDealtToChampions
+                                                </div>
+                                            </div>
+                                            <div class="stat d-inline-flex p-0 m-0">
+                                                <div class="s-left">
+                                                    CS
+                                                </div>
+                                                <div class="s-right">
+                                                    @p.TotalMinionsKilled
+                                                </div>
+                                            </div>
+                                            <div class="stat d-inline-flex p-0 m-0">
+                                                <div class="s-left">
+                                                    Wards
+                                                </div>
+                                                <div class="s-right">
+                                                    @p.WardsPlaced
+                                                </div>
+                                            </div>
                                         </div>
                             }
                         }
@@ -89,7 +140,8 @@
                                     <img src="~/img/champion/tiles/@(playerChamp)_0.jpg" />
                                 </div>
                                 <div class="player-name text-right">
-                                    @player.SummonerName
+                                    @Html.ActionLink(player.SummonerName, "Profile", new FindModel { Name = player.SummonerName, Region = Model.Summoner.Region })
+                                    <!-- @player.SummonerName -->
                                 </div>
                             </div>
                         }
@@ -108,7 +160,8 @@
                                     <img src="~/img/champion/tiles/@(playerChamp)_0.jpg" />
                                 </div>
                                 <div class="player-name">
-                                    @player.SummonerName
+                                    @Html.ActionLink(player.SummonerName, "Profile", new FindModel { Name = player.SummonerName, Region = Model.Summoner.Region })
+                                    <!-- @player.SummonerName -->
                                 </div>
                             </div>
                         }

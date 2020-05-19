@@ -15,6 +15,9 @@ namespace MyLeagueDashboard.Models
         public long RevisionDate { get; set; }
         public int SummonerLevel { get; set; }
 
+        public float KDA { get; set; }
+        public string Region { get; set; }
+
 
     }
 }

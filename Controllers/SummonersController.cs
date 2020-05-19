@@ -33,8 +33,8 @@ namespace MyLeagueDashboard.Controllers
             _allChamps = _championMastery.GetAllChampions();
         }
 
-        [HttpPost]
-        public IActionResult Profile(string name)
+        
+        public IActionResult Profile(FindModel fm)
         {
             // TODO: Add option to select region
             // Currently just using NA region, since that's what I am on.
@@ -44,13 +44,14 @@ namespace MyLeagueDashboard.Controllers
 
 
             // Get summoner info
-            Summoner summoner = _context.Summoners.Where(s => s.Name == name).SingleOrDefault();
+            Summoner summoner = _context.Summoners.Where(s => s.Name == fm.Name).SingleOrDefault();
             if (summoner == null) {
                 Summoner_V4 summonerv4 = new Summoner_V4("na1");
-                summoner = summonerv4.GetSummonerByName(name);
+                summoner = summonerv4.GetSummonerByName(fm.Name);
+                summoner.Region = fm.Region;
                 _context.Summoners.Add(summoner);
                 _context.SaveChanges();
-                summoner = _context.Summoners.Where(s => s.Name == name).SingleOrDefault();
+                summoner = _context.Summoners.Where(s => s.Name == fm.Name).SingleOrDefault();
             }
             // Get list of masteries by summoner id
             List<ChampionMastery> masteries = championMastery.GetChampionMasteryById(summoner.Id);
@@ -76,6 +77,8 @@ namespace MyLeagueDashboard.Controllers
             
             if (matches == null)
             {
+                int k, d, a;
+                k = d = a = 0;
                 matches = matchv4.GetMatchesByAccountID(summoner.AccountId);
                 matches.SummonerID = summoner.Id;
                 foreach (Matches match in matches.Matches)
@@ -84,9 +87,25 @@ namespace MyLeagueDashboard.Controllers
                     if (matchDB == null) { 
                         MatchDTO matchDTO = matchv4.GetMatchByMatchID(match.GameID);
                         matchDB = matchDTO.ConvertMatchDTOToDBv2(_context);
+                    } else
+                    {
+                        matchDB.PlayerInfos = _context.PlayerInfoDBs.Where(p => p.GameID == matchDB.GameID).OrderBy(p => p.ParticipantID).ToList();
+                        matchDB.Teams = _context.TeamStatsDBs.Where(t => t.GameID == matchDB.GameID).OrderBy(t => t.TeamID).ToList();
                     }
+
                     match.MatchDB = matchDB;
+                    foreach (PlayerInfoDB p in matchDB.PlayerInfos)
+                    {
+                        if (p.SummonerID == summoner.Id)
+                        {
+                            k += p.Kills;
+                            d += p.Deaths;
+                            a += p.Assists;
+                        }
+                    }
                 }
+                summoner.KDA = ((k + a) / (float)d);
+                _context.Summoners.Update(summoner);
                 _context.MatchesResponses.Add(matches);
                 _context.SaveChanges();
             } else
@@ -108,8 +127,6 @@ namespace MyLeagueDashboard.Controllers
             {
                 championIDs.Add(int.Parse(c.Key), c.Id);
             }
-
-            MatchDB m = new MatchDB(); // Just a stopping point
             ViewModelProfile viewModel = new ViewModelProfile { Summoner = summoner,
                                                                 Masteries = masteries,
                                                                 ChampionIDs = championIDs,

@@ -672,6 +672,9 @@ namespace MyLeagueDashboard.Data.Migrations
                     b.Property<string>("AccountId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<float>("KDA")
+                        .HasColumnType("real");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -679,6 +682,9 @@ namespace MyLeagueDashboard.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PuuId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RevisionDate")
