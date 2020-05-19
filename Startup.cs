@@ -33,6 +33,8 @@ namespace MyLeagueDashboard
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddMemoryCache();
             services.AddRazorPages();
         }
 
@@ -52,7 +54,7 @@ namespace MyLeagueDashboard
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

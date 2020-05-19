@@ -101,7 +101,10 @@ namespace MyLeagueDashboard.Data.Migrations
                     RevisionDate = table.Column<long>(nullable: false),
                     SummonerLevel = table.Column<int>(nullable: false),
                     KDA = table.Column<float>(nullable: false),
-                    Region = table.Column<string>(nullable: true)
+                    Region = table.Column<string>(nullable: true),
+                    Kills = table.Column<int>(nullable: false),
+                    Deaths = table.Column<int>(nullable: false),
+                    Assists = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

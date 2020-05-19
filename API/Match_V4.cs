@@ -52,5 +52,24 @@ namespace MyLeagueDashboard.API
                 return null;
             }
         }
+
+        public MatchesResponse GetMoreMatchesByAccountID(string accountID, int startingIndex)
+        {
+            string path = $"match/v4/matchlists/by-account/{accountID}?beginIndex={startingIndex}&endIndex={startingIndex+10}&";
+
+            var response = GET(GetURI(path));
+            string content = response.Content.ReadAsStringAsync().Result;
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine("Return good");
+                return JsonConvert.DeserializeObject<MatchesResponse>(content);
+            }
+            else
+            {
+                Console.WriteLine("Return bad");
+                return null;
+            }
+        }
     }
 }

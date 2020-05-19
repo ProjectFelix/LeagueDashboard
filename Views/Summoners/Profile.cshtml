@@ -57,7 +57,7 @@
         @foreach (Matches match in Model.Matchlist.Matches)
         {
 
-            <div class="match d-flex neu-shadow">
+            <div class="match d-flex mt-5">
                 <div class="match-summoner d-flex flex-column">
                     @{string summonerChamp;
                         int summonerKills, summonerAssists, summonerDeaths;
@@ -89,7 +89,7 @@
                                             <div class="stat victory-@((p.Win == true) ? "w":"d")">
                                                 <span>@((p.Win == true) ? "Victory" : "Defeat")</span>
                                             </div>
-                                            <div class="stat d-inline-flex p-0 m-0">
+                                            <div class="stat d-inline-flex">
                                                 <div class="s-left">
                                                     Gold
                                                 </div>
@@ -97,7 +97,7 @@
                                                     @p.GoldEarned
                                                 </div>
                                             </div>
-                                            <div class="stat d-inline-flex p-0 m-0">
+                                            <div class="stat d-inline-flex">
                                                 <div class="s-left">
                                                     Damage
                                                 </div>
@@ -105,7 +105,7 @@
                                                     @p.TotalDamageDealtToChampions
                                                 </div>
                                             </div>
-                                            <div class="stat d-inline-flex p-0 m-0">
+                                            <div class="stat d-inline-flex">
                                                 <div class="s-left">
                                                     CS
                                                 </div>
@@ -113,7 +113,7 @@
                                                     @p.TotalMinionsKilled
                                                 </div>
                                             </div>
-                                            <div class="stat d-inline-flex p-0 m-0">
+                                            <div class="stat d-inline-flex">
                                                 <div class="s-left">
                                                     Wards
                                                 </div>
@@ -129,7 +129,7 @@
                 </div>
                 @{ var team1 = match.MatchDB.Teams.ToList()[0]; }
                 <div class="team1 @((team1.Win == "Win") ? "win" : "lose")">
-                    <div class="outcome"><h1>@((team1.Win == "Win") ? "Win" : "Lose")</h1></div>
+                    <div class="outcome pt-2"><h1>@((team1.Win == "Win") ? "Win" : "Lose")</h1></div>
                     <div class="participants d-flex flex-column">
                         @for (int i = 0; i < 5; i++)
                         {
@@ -170,4 +170,5 @@
             </div>
         }
     </div>
+    <a class="align-self-center" asp-action="ShowMore"><input class="more-btn" type="button" value="Show More..." /></a>
 </div>

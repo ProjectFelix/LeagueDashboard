@@ -18,6 +18,10 @@ namespace MyLeagueDashboard.Models
         public float KDA { get; set; }
         public string Region { get; set; }
 
+        public int Kills { get; set; }
+        public int Deaths { get; set; }
+        public int Assists { get; set; }
+
 
     }
 }

@@ -10,7 +10,7 @@ using MyLeagueDashboard.Data;
 namespace MyLeagueDashboard.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200519162128_Init")]
+    [Migration("20200519232638_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -674,8 +674,17 @@ namespace MyLeagueDashboard.Data.Migrations
                     b.Property<string>("AccountId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Assists")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Deaths")
+                        .HasColumnType("int");
+
                     b.Property<float>("KDA")
                         .HasColumnType("real");
+
+                    b.Property<int>("Kills")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
