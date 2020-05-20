@@ -115,9 +115,6 @@ namespace MyLeagueDashboard.Controllers
                 _context.Summoners.Update(summoner);
                 _context.MatchesResponses.Add(matches);
                 _context.SaveChanges();
-                HttpContext.Session.SetInt32("Kills", k);
-                HttpContext.Session.SetInt32("Deaths", d);
-                HttpContext.Session.SetInt32("Assists", a);
             } else
             {
                 matches.Matches = _context.Matches.Where(m => m.MatchesResponseID == matches.MatchesResponseID).OrderByDescending(m => m.Timestamp).ToList();

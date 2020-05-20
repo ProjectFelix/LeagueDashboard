@@ -20,20 +20,13 @@
         </div>
         <div class="level-info d-flex">
             <div class="level-left">
-                <span>Level</span>
+                <span>@Model.Summoner.SummonerLevel</span>
             </div>
             <div class="level-right">
-                Level: @Model.Summoner.SummonerLevel
+                <span>Avg KDA: @Model.Summoner.KDA.ToString("F")</span>
             </div>
         </div>
-        <div class="summoner-kda d-flex">
-            <div class="summoner-kda-left">
-                KDA
-            </div>
-            <div class="summoner-kda-right">
-                @Model.Summoner.KDA.ToString("F")
-            </div>
-        </div>
+        
 
     </div>
     <div class="masteries align-self-center mb-2"><h1>Top Champions by Mastery</h1></div>

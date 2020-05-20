@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.IO;
 using Microsoft.Azure.KeyVault;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MyLeagueDashboard.API
 {
@@ -19,15 +22,20 @@ namespace MyLeagueDashboard.API
             Region = region;
             // Read key from text. Added file to .gitignore.
             // Using temporary dev key.
-            Task getKey = new Task(async () => await GetSecret());
+            Task getKey = new Task(async () => await GetSecret()); // Maybe move this out of the constructor and into the GET method, or store in session?
             getKey.Start();
             getKey.Wait();
+            while (Key == null)
+            {
+                Thread.Sleep(100);
+            }
         }
 
         protected HttpResponseMessage GET(string URL)
         {
             using (HttpClient client = new HttpClient())
             {
+                
                 var result = client.GetAsync(URL);
                 result.Wait();
 
@@ -37,6 +45,7 @@ namespace MyLeagueDashboard.API
 
         protected string GetURI(string path)
         {
+            
             return "https://" + Region + ".api.riotgames.com/lol/" + path + "api_key=" + Key;
         }
 
@@ -65,6 +74,7 @@ namespace MyLeagueDashboard.API
                     var authContext = new AuthenticationContext(authority);
                     var credential = new ClientCredential(aci, acs);
                     AuthenticationResult result = await authContext.AcquireTokenAsync(resource, credential);
+                    
                     if (result == null)
                     {
                         throw new InvalidOperationException("Failed to retrieve JWT token");
