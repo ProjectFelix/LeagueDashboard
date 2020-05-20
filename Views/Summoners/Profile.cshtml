@@ -81,7 +81,10 @@
                                                 </div>
                                                 <div class="kda">
                                                     <span>@summonerKills / @summonerDeaths / @summonerAssists</span>
-                                                    (<span style="color:@((kdaDiff >= 0) ? "#BDf9B3" : "#FDAFAF")">@kdaDiff.ToString("F")</span> KDA)
+                                                    
+                                                </div>
+                                                <div class="kda">
+                                                    KDA: @summonerKDA.ToString("F") (<span style="color:@((kdaDiff >= 0) ? "#BDf9B3" : "#FDAFAF")">@((kdaDiff > 0) ? "+" : "")@kdaDiff.ToString("F")</span>)
                                                 </div>
                                             </div>
                                         </div>

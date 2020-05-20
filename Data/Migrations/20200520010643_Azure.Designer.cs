@@ -10,8 +10,8 @@ using MyLeagueDashboard.Data;
 namespace MyLeagueDashboard.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200519232638_Init")]
-    partial class Init
+    [Migration("20200520010643_Azure")]
+    partial class Azure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
